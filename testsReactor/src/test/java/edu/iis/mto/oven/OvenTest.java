@@ -168,6 +168,29 @@ class OvenTest {
         verify(fan, times(1)).off();
     }
 
+    @Test
+    void noHeaterIfInitialTempLessThanZero() throws HeatingException {
+        programStage = ProgramStage
+                .builder()
+                .withTargetTemp(180)
+                .withStageTime(90)
+                .withHeat(HeatType.GRILL)
+                .build();
+
+        List<ProgramStage> programStageList = new ArrayList<>();
+        programStageList.add(programStage);
+
+        bakingProgram = BakingProgram
+                .builder()
+                .withInitialTemp(-1)
+                .withStages(programStageList)
+                .withCoolAtFinish(true)
+                .build();
+
+        BakingResult result = oven.runProgram(bakingProgram);
+        verify(heatingModule, times(0)).heater(any());
+    }
+
    /* void invokeHeaterHeatTypeThermalCirculation() throws HeatingException {
         ProgramStage programStage = ProgramStage
                 .builder()
