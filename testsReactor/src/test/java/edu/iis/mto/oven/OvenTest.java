@@ -143,6 +143,31 @@ class OvenTest {
         assertFalse(result.isSuccess());
     }
 
+    @Test
+    void turnOffFanWhenHeatTypeIsNotThermalCirculation() {
+        when(fan.isOn()).thenReturn(true);
+
+        programStage = ProgramStage
+                .builder()
+                .withTargetTemp(180)
+                .withStageTime(90)
+                .withHeat(HeatType.GRILL)
+                .build();
+
+        List<ProgramStage> programStageList = new ArrayList<>();
+        programStageList.add(programStage);
+
+        bakingProgram = BakingProgram
+                .builder()
+                .withInitialTemp(21)
+                .withStages(programStageList)
+                .withCoolAtFinish(true)
+                .build();
+
+        BakingResult result = oven.runProgram(bakingProgram);
+        verify(fan, times(1)).off();
+    }
+
    /* void invokeHeaterHeatTypeThermalCirculation() throws HeatingException {
         ProgramStage programStage = ProgramStage
                 .builder()
