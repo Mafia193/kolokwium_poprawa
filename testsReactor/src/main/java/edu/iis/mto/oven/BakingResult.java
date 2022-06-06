@@ -7,13 +7,13 @@ public class BakingResult {
 
     private final BakingProgram sourceProgram;
     private final boolean success;
-    private final Map<ProgramStage, Boolean> stageCompletenes;
+    private final Map<ProgramStage, Boolean> stageCompletes;
     private final String errorMessage;
 
     private BakingResult(Builder builder) {
         this.sourceProgram = builder.sourceProgram;
         this.success = builder.success;
-        this.stageCompletenes = builder.stageCompletenes;
+        this.stageCompletes = builder.stageCompletes;
         this.errorMessage = builder.errorMessage;
     }
 
@@ -25,8 +25,8 @@ public class BakingResult {
         return success;
     }
 
-    public Map<ProgramStage, Boolean> getStageCompletenes() {
-        return stageCompletenes;
+    public Map<ProgramStage, Boolean> getStageCompletes() {
+        return stageCompletes;
     }
 
     public String getErrorMessage() {
@@ -41,7 +41,7 @@ public class BakingResult {
 
         private BakingProgram sourceProgram;
         private boolean success;
-        private Map<ProgramStage, Boolean> stageCompletenes = Collections.emptyMap();
+        private Map<ProgramStage, Boolean> stageCompletes = Collections.emptyMap();
         private String errorMessage;
 
         private Builder() {}
@@ -56,8 +56,8 @@ public class BakingResult {
             return this;
         }
 
-        public Builder withStageCompletenes(Map<ProgramStage, Boolean> stageCompletenes) {
-            this.stageCompletenes = stageCompletenes;
+        public Builder withStageCompletes(Map<ProgramStage, Boolean> stageCompletes) {
+            this.stageCompletes = stageCompletes;
             return this;
         }
 

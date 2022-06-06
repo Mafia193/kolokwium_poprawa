@@ -7,7 +7,7 @@ import edu.iis.mto.oven.BakingResult.Builder;
 
 public class Oven {
 
-    static final int HEAT_UP_AND_FINISH_SETTING_TIME = 0;
+    private static final int HEAT_UP_AND_FINISH_SETTING_TIME = 0;
     private final HeatingModule heatingModule;
     private final Fan fan;
 
@@ -17,18 +17,18 @@ public class Oven {
     }
 
     public BakingResult runProgram(BakingProgram program) {
-        Map<ProgramStage, Boolean> stageCompletnes = new LinkedHashMap<>();
+        Map<ProgramStage, Boolean> stageCompletes = new LinkedHashMap<>();
         for (ProgramStage programStage : program) {
-            stageCompletnes.put(programStage, false);
+            stageCompletes.put(programStage, false);
         }
         Builder builder = BakingResult.builder()
                                       .withSourceProgram(program)
-                                      .withStageCompletenes(stageCompletnes);
+                                      .withStageCompletes(stageCompletes);
         try {
             init(program.getInitialTemp());
             for (ProgramStage programStage : program) {
                 runStage(programStage);
-                stageCompletnes.put(programStage, true);
+                stageCompletes.put(programStage, true);
 
             }
             cool(program);
@@ -56,9 +56,9 @@ public class Oven {
     }
 
     private void runStage(ProgramStage programStage) throws HeatingException {
-        if (programStage.getHeat() == HeatType.THERMO_CIRCULATION) {
+        if (programStage.getHeat() == HeatType.THERMAL_CIRCULATION) {
             fan.on();
-            heatingModule.termalCircuit(settings(programStage));
+            heatingModule.thermalCircuit(settings(programStage));
             fan.off();
         } else {
             if (fan.isOn()) {
