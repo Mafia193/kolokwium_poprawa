@@ -5,7 +5,6 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -70,20 +69,6 @@ class OvenTest {
         assertTrue(result.isSuccess());
         assertEquals(result.getSourceProgram(), bakingProgram);
     }
-
-   /* @Test
-    void test2() throws HeatingException {
-        HeatingSettings heatingSettings = HeatingSettings
-                .builder()
-                .withTargetTemp(200)
-                .withTimeInMinutes(60)
-                .build();
-
-        doThrow(HeatingException.class).when(HeatingModule.class);
-        BakingResult result = oven.runProgram(bakingProgram);
-        assertFalse(result.isSuccess());
-        assertEquals(result.getSourceProgram(), bakingProgram);
-    }*/
 
     @Test
     void invokeGrillHeatTypeGrill() throws HeatingException {
@@ -190,27 +175,4 @@ class OvenTest {
         BakingResult result = oven.runProgram(bakingProgram);
         verify(heatingModule, times(0)).heater(any());
     }
-
-   /* void invokeHeaterHeatTypeThermalCirculation() throws HeatingException {
-        ProgramStage programStage = ProgramStage
-                .builder()
-                .withTargetTemp(180)
-                .withStageTime(90)
-                .withHeat(HeatType.HEATER)
-                .build();
-
-        List<ProgramStage> programStageList = new ArrayList<>();
-        programStageList.add(programStage);
-
-        bakingProgram = BakingProgram
-                .builder()
-                .withInitialTemp(21)
-                .withStages(programStageList)
-                .withCoolAtFinish(true)
-                .build();
-
-        verify(heatingModule, times(0)).grill(any());
-        verify(heatingModule, times(1)).heater(any());
-    }*/
-
 }
