@@ -135,6 +135,34 @@ class OvenTest {
         verify(heatingModule, times(2)).heater(any());
     }
 
-   
+    @Test
+    void noSuccessHeatingException() throws HeatingException {
+        doThrow(HeatingException.class).when(heatingModule).heater(any());
+
+        BakingResult result = oven.runProgram(bakingProgram);
+        assertFalse(result.isSuccess());
+    }
+
+   /* void invokeHeaterHeatTypeThermalCirculation() throws HeatingException {
+        ProgramStage programStage = ProgramStage
+                .builder()
+                .withTargetTemp(180)
+                .withStageTime(90)
+                .withHeat(HeatType.HEATER)
+                .build();
+
+        List<ProgramStage> programStageList = new ArrayList<>();
+        programStageList.add(programStage);
+
+        bakingProgram = BakingProgram
+                .builder()
+                .withInitialTemp(21)
+                .withStages(programStageList)
+                .withCoolAtFinish(true)
+                .build();
+
+        verify(heatingModule, times(0)).grill(any());
+        verify(heatingModule, times(1)).heater(any());
+    }*/
 
 }
